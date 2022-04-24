@@ -32,7 +32,7 @@ public MyA:string="Sukesh";
   }
 
   private validateProductCode(value: string) {
-    const productCodeAlreadyExistList = ['e001', 'e009', 'e010'];
+    const productCodeAlreadyExistList = ['e001', 'e009', 'e010', 'Giacomo'];
     return (productCodeAlreadyExistList.indexOf(value) > -1);
   }
 }

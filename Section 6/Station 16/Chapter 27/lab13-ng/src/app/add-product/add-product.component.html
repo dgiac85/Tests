@@ -3,8 +3,9 @@
     <div class="card">
       <h5 class="card-header">Add Product</h5>
       <div class="card-body">
+        <!--CODE-->
         <div class="form-group">
-          <label for="productCode">Product Code: </label>
+          <label for="productCode">Product Code {{addProduct.productCode}}: </label>
           <input
             id="productCode"
             class="form-control"
@@ -44,6 +45,7 @@
           </div>
         </div>
 
+        <!--NAME-->
         <div class="form-group">
           <label for="productName">Product Name: </label>
           <input
@@ -71,8 +73,9 @@
           </div>
         </div>
 
+        <!--BRAND-->
         <div class="form-group">
-          <label for="selectBrand">Brand Name: </label>
+          <label for="selectBrand">Brand Name: {{addProduct.brand}} </label>
           <select
             id="selectBrand"
             class="form-control custom-select"
@@ -86,7 +89,7 @@
             #Brand="ngModel"
           >
             <option [selected]="true" value>--Select Brand--</option>
-            <option [value]="brand.Id" *ngFor="let brand of Brands">
+            <option [value]="brand.Id" *ngFor="let brand of Brands; let i=index;">
               {{ brand.Value }}
             </option>
           </select>
@@ -99,6 +102,7 @@
           </div>
         </div>
 
+        <!--CATEGORY-->
         <div class="form-group">
           <label for="selectCategory">Category: </label>
           <select
@@ -128,6 +132,7 @@
           </div>
         </div>
 
+        <!--MANUFACTURING DATE-->
         <div class="form-group">
           <label for="selectManufacturingDate">Manufacturing Date: </label>
 
@@ -161,6 +166,7 @@
           </div>
         </div>
 
+        <!--PRODUCT TYPE RADIOS-->
         <div class="form-group">
           <label>Product Type: </label>
           <div>
@@ -202,6 +208,7 @@
           </div>
         </div>
 
+        <!--READY FOR SALE CHECKBOX -->
         <div class="form-group">
           <div class="form-group">
             <div class="form-check">
@@ -456,7 +463,7 @@
             </div>
           </div>
         </div>
-
+        <!-- FINO A MANUFACTURING ADDRESS-->
         <div class="form-group">
           <app-image-upload
             name="image"

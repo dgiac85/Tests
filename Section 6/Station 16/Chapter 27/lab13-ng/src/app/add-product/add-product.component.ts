@@ -34,7 +34,7 @@ export class AddProductComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.setDropDownValues();
+    this.setDropDownValues(); //è il classico momento in cui si fa il nuova operazione per riempire i dari provenienti ad esempio dai servizi
   }
 
   private setDropDownValues(): void {
