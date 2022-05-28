@@ -1,0 +1,155 @@
+<!--p>person works!</p-->
+<hr />
+<!-- C#3 applicazione della interpolazione, il metodo + semplice per applicare il property binding-->
+Primo Nome della lista: {{ persons[0].Fname }} {{ persons[0].Lname }}
+<hr />
+
+<!-- C#4 ora utilizziamo una direttiva strutturale. Una direttiva è un concetto di angular core che estende il nostro template html
+Tra le direttive ci sono anche le direttive componenti come il componente person che abbiamo creato e le direttive di attributo che cambiano il comportamento 
+di default del tag html. Una strutturale cambia la struttura di default dell'elemento-->
+<!-- C#5 applicazione dell'ngFor che è disponibile nel person module perchè 
+il Browser Module che rende ACCESSIBILE la direttiva ngFor è stato importato nell'appmodule che dichiara il person component-->
+<input type="button" value="Add New No TWDB" (click)="addNewNOTWDB()" /><br /><br />
+<input type="button" value="Add New TWDB" (click)="addNewTWDB()" /><br /><br />
+<input type="button" value="Add NGF" (click)="addNewNGF()" /><br /><br />
+<table border="2">
+    <tr>
+      <th>Nome</th>
+      <th>Cognome</th>
+    </tr>
+    <tr *ngFor="let person of persons">
+      <td>{{ person.Fname }}</td>
+      <td>{{ person.Lname }}</td>
+    </tr>
+  </table>
+  <!--C#7 qui stiamo introducendo il concetto di EVENT BINDING e di output property 
+    con relativo metodo all'interno della component class. 
+  In angular tutti gli eventi del DOM sono sottoposti ad Override.
+   All fine di questi eventi scatta quella che è conosciuta come CHANGE DETECTION 
+   che rirenderizza il componente basandosi sul nuovo stato della UI-->
+   <hr [hidden]="!isAddNewNOTWDB"/>
+   <div [hidden]="!isAddNewNOTWDB">
+     <!-- C#8 vedi sopra applicazione del property binding - lego una proprietà di input ad una proprietà di classe-->
+     <!-- C#9 l'interpolazione viene convertita in property binding dietro le quinte - IL PROPERTY BINDING 
+        ci viene utile quando dobbiamo effettuare un property binding per valori 
+        che non sono stringhe.-->
+     <!--NO TWO WAY DATA BINDING-->   
+     <h1>Aggiungi un altro person Senza two way data binding</h1>
+     <!--C11 con [value] stiamo applicando il ONE WAY BINDING. 
+        Il valore di FirstName verrà mostrato nella textbox. E quando verrà cambiato cambierà il valore nella textbox-->
+     Nome:
+     <input
+       [value]="FirstName"
+       name="Fname"
+       (change)="changeFirstName($event)"
+     /><br /><br />
+     Cognome:
+     <input
+       [value]="LastName"
+       type="text"
+       name="Lname"
+       (change)="changeLastName($event)"
+     /><br /><br />
+     <!--C#6 qui stiamo introducendo il concetto di EVENT BINDING e di output property 
+        con relativo metodo all'interno della component class. 
+     In angular tutti gli eventi del DOM sono sottoposti ad Override. 
+     All fine di questi eventi scatta quella che è conosciuta come CHANGE DETECTION 
+     che rirenderizza il componente basandosi sul nuovo stato della UI-->
+     <input type="button" value="Save" [disabled]="LastName.length === 0 || FirstName.length === 0" (click)="save()" />&nbsp;
+     <input type="button" value="Cancel" (click)="cancel()" />&nbsp;
+   
+     <!--C#7 oltre all'event binding è importante ccapire cosa è anche il PROPERTY BINDING 
+        ovvero la creazione di un LEGAME tra la proprietà di un controllo nel template 
+        cioè una proprietà di input e una proprietà all'interno della classe del componente. 
+        Il PROPERY BINDING introduce anche il concetto di INPUT PROPERTY. come vedi sotto 
+        la proprietà di input è href tra le parentesi quadre. 
+        E il valore url è la proprietà del componente che fa parte del property binding
+         con la input property href -->
+     <a [href]="url"> Click ME</a>
+
+   </div>
+<!--FINE NO TWO WAY DATA BINDING-->   
+
+   <hr [hidden]="!isAddNewTWDB">
+   <div [hidden]="!isAddNewTWDB">
+   <!--C#12 applicazione del two way data binding DA NOTARE CHE I CAMBIAMENTI SONO LIVE. 
+    [(ngModel)] è una direttiva. QUESTO è l'approccio TEMPLATE DRIVEN
+   Inoltre da notare che nel secondo input è stata applicata la validazione-->
+   <h1>Aggiungi un altro person Con two way data binding</h1>
+   FIRSTNAME: {{FirstName}} <br>
+   LASTNAME: {{LastName}} <br><br>
+   
+   Nome:
+   <input
+    required
+     (ngModel)="FirstName"
+     minlength="3"
+     name="Fname"
+     #B="ngModel"
+     (change)="changeFirstName($event)"
+   /><br /><br />
+   Cognome:
+   <!--C#13 da notare che #F serve a dare una reference per poter utilizzare le 
+    potenzialita della direttiva ngModel F viene chiamata TEMPLATE REFERENCE VALUE-->
+   <input
+     required
+     minlength="3"
+     [(ngModel)]="LastName"
+     type="text"
+     name="Lname"
+     #F="ngModel"
+     (change)="changeLastName($event)" 
+   />
+   <span [hidden]="!(F.dirty && F.errors?.['minlength'])"> Devi inserire almeno 3 caratteri</span>
+   <span></span><br /><br />
+   
+   <input type="button" value="Save" [disabled]="LastName.length === 0 || FirstName.length === 0" (click)="save()" />&nbsp;
+   <input type="button" value="Cancel" (click)="cancel()" />&nbsp;
+   
+   
+   <a [href]="url"> Click ME</a>
+   </div>
+   <hr [hidden]="!isAddNewNGF">
+   <!--C#14 utilizzo della direttiva ngForm con TEMPLATE REFERENCE VALUE myForm-->
+   <div [hidden]="!isAddNewNGF" ngForm #myForm="ngForm">
+   <!--C#12 applicazione del two way data binding DA NOTARE CHE I CAMBIAMENTI SONO LIVE. [(ngModel)] è una direttiva. QUESTO è l'approccio TEMPLATE DRIVEN
+   Inoltre da notare che nel secondo input è stata applicata la validazione-->
+   <h1>Aggiungi un altro person Con NGFORM</h1>
+   FIRSTNAME: {{FirstName}} <br>
+   LASTNAME: {{LastName}} <br><br>
+   
+   Nome:
+   <input
+     required
+     minlength="3" 
+     [(ngModel)]="FirstName"
+     name="Fname"
+     #G="ngModel"
+     (change)="changeFirstName($event)"
+   />
+   <span [hidden]="!(G.dirty && G.errors?.['minlength'])"> Devi inserire almeno 3 caratteri</span><br /><br />
+   Cognome:
+   <!--C#15 da notare che #F serve a dare una reference per poter utilizzare le potenzialita della direttiva ngModel F viene chiamata TEMPLATE REFERENCE VALUE-->
+   <input
+     required
+     minlength="3"
+     [(ngModel)]="LastName"
+     type="text"
+     name="Lname"
+     #I="ngModel"
+     (change)="changeLastName($event)"
+   />
+   <!--C#16 da notare il punto interrogativo tra gli errori. Se non ci sono salta in controllo-->
+   <span [hidden]="!(I.dirty && I.errors?.['minlength'])"> Devi inserire almeno 3 caratteri</span>
+   <span></span><br /><br />
+   
+   <input type="button" value="Save" (click)="save()" [disabled]="myForm.invalid"/>&nbsp;
+   <input type="button" value="Cancel" (click)="cancel()" />&nbsp;
+   
+   
+   <a [href]="url"> Click ME</a>
+   </div>
+   
+   
+   
+   
